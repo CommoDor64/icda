@@ -1,0 +1,27 @@
+{
+  "canisters": {
+    "icda_backend": {
+      "candid": "src/icda_backend/icda_backend.did",
+      "package": "icda_backend",
+      "type": "rust"
+    },
+    "icda_frontend": {
+      "dependencies": [
+        "icda_backend"
+      ],
+      "source": [
+        "src/icda_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "icda_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}

@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "src/icda_backend"
+]
+resolver = "2"
