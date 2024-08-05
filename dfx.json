@@ -1,4 +1,12 @@
 {
+  "networks": {
+    "dev": {
+      "providers": [
+        "http://0.0.0.0:8080"
+      ],
+      "type": "ephemeral"
+    }
+  },
   "canisters": {
     "icda_backend": {
       "candid": "src/icda_backend/icda_backend.did",

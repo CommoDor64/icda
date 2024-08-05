@@ -1,0 +1,6 @@
+type Object = record { data : blob };
+service : () -> {
+  fetch : (text) -> (opt Object) query;
+  greet : (text) -> (text) query;
+  store : (Object) -> (text);
+}
