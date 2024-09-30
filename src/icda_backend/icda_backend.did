@@ -1,0 +1,12 @@
+type CertifiedBlock = record {
+  certificate : blob;
+  data : blob;
+  witness : blob;
+};
+type Object = record { data : blob };
+type Result = variant { Ok : CertifiedBlock; Err : text };
+type Result_1 = variant { Ok : record {}; Err : text };
+service : () -> {
+  fetch : (text) -> (Result) query;
+  store : (text, Object) -> (Result_1);
+}

@@ -1,6 +1,15 @@
+type CertifiedBlock = record {
+  certificate : blob;
+  data : blob;
+  witness : blob;
+};
+type CertifiedBlockECDSA = record { signature : blob; block : text };
 type Object = record { data : blob };
+type StorageReceipt = record { leaf_hash : blob; root_hash : blob };
+type StorageReceiptECDSA = record { signature : blob };
 service : () -> {
-  fetch : (text) -> (opt Object) query;
-  greet : (text) -> (text) query;
-  store : (Object) -> (text);
+  fetch : (text) -> (opt CertifiedBlock) query;
+  fetch_ecdsa : (text) -> (opt CertifiedBlockECDSA) query;
+  store : (text, Object) -> (StorageReceipt);
+  store_ecdsa : (text, text) -> (StorageReceiptECDSA);
 }

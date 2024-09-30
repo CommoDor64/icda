@@ -308,6 +308,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "ic-certified-map"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "197524aecec47db0b6c0c9f8821aad47272c2bd762c7a0ffe9715eaca0364061"
+dependencies = [
+ "serde",
+ "serde_bytes",
+ "sha2",
+]
+
+[[package]]
 name = "ic0"
 version = "0.21.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -334,6 +345,7 @@ dependencies = [
  "hex",
  "ic-cdk",
  "ic-cdk-timers",
+ "ic-certified-map",
  "serde",
  "serde_cbor",
  "sha2",
