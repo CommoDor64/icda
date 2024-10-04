@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 .PHONY: all deploy start env-setup
 
 DFX_ENV = $(HOME)/.local/share/dfx/env
