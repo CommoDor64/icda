@@ -9,6 +9,6 @@ start:
 
 deploy:
 	@echo "Deploying dfx project..."
-	@export PATH="$$(cat $(DFX_ENV)):$$PATH" && export PATH="$$(cat $(CARGO_ENV)):$$PATH" && dfx deploy
+	@source $(DFX_ENV) && source $(CARGO_ENV) && dfx deploy
 
 all: start deploy
