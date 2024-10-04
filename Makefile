@@ -1,20 +1,18 @@
 SHELL := /bin/bash
 
-.PHONY: all deploy start env-setup
+.PHONY: all deploy start
 
 DFX_ENV = $(HOME)/.local/share/dfx/env
 CARGO_ENV = $(HOME)/.cargo/env
 
-# Helper target to source environment files
-env-setup:
-	@source $(DFX_ENV) && source $(CARGO_ENV)
-
-start: env-setup
+start: 
 	@echo "Starting dfx in the background..."
+	@source $(DFX_ENV) && source $(CARGO_ENV)
 	@dfx start --background --clean
 
-deploy: env-setup
+deploy:
 	@echo "Deploying dfx project..."
+	@source $(DFX_ENV) && source $(CARGO_ENV)
 	@dfx deploy
 
 all: start deploy
