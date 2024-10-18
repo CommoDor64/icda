@@ -1,16 +1,14 @@
-SHELL := /bin/bash
+clean:
+	docker rm -f icda || true
 
-.PHONY: all deploy start
+build:
+	docker build -t icda .
 
-DFX_ENV = $(HOME)/.local/share/dfx/env
-CARGO_ENV = $(HOME)/.cargo/env
-
-start: 
-	@echo "Starting dfx in the background..."
-	@source $(DFX_ENV) && source $(CARGO_ENV) && dfx start --background --clean
+run: clean build
+	docker run -d --name icda --network=host icda
 
 deploy:
-	@echo "Deploying dfx project..."
-	@source $(DFX_ENV) && source $(CARGO_ENV) && dfx deploy
+	docker exec -it icda bash -c "dfx deploy icda_backend"
 
-all: start deploy
+all: run deploy
+
