@@ -22,13 +22,13 @@ fn init() {}
 #[derive(CandidType, Debug, Deserialize, Serialize, Clone)]
 struct StorageReceipt {}
 
-fn sanitize_hash(hash: ObjectHash) -> String {
+fn sanitize_hash(hash: &ObjectHash) -> String {
     hash.strip_prefix("0x").unwrap_or(&hash).to_string()
 }
 
 #[ic_cdk::update]
 fn store(hash: ObjectHash, block: Object) -> Result<StorageReceipt, String> {
-    let shash = sanitize_hash(hash).as_bytes().to_vec();
+    let shash = sanitize_hash(&hash).as_bytes().to_vec();
     STORAGE.with(|storage| {
         let storage_receipt = TREE.with(|tree| {
             let mut tree = tree.borrow_mut();
@@ -39,6 +39,8 @@ fn store(hash: ObjectHash, block: Object) -> Result<StorageReceipt, String> {
             StorageReceipt {}
         });
         storage.borrow_mut().insert(shash, block.data);
+
+        ic_cdk::println!("successfully stored block with hash: {}", &hash);
 
         Ok(storage_receipt)
     })
@@ -53,7 +55,7 @@ struct CertifiedBlock {
 
 #[ic_cdk::query]
 fn fetch(hash: ObjectHash) -> Result<CertifiedBlock, String> {
-    let shash = &sanitize_hash(hash).as_bytes().to_vec();
+    let shash = &sanitize_hash(&hash).as_bytes().to_vec();
     let certificate = ic_cdk::api::data_certificate()
         .ok_or_else(|| format!("No certificate for hash: {:?}", shash))?;
 
@@ -75,6 +77,8 @@ fn fetch(hash: ObjectHash) -> Result<CertifiedBlock, String> {
             .cloned()
             .ok_or_else(|| format!("No data for hash: {:?}", shash))
     })?;
+
+    ic_cdk::println!("successfully fetched block with hash: {}", &hash);
 
     Ok(CertifiedBlock {
         certificate,
